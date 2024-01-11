@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 17:30:30 by hehuang           #+#    #+#             */
-/*   Updated: 2023/12/20 18:35:03 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/11 14:59:30 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,20 @@ void	rev_rotate_stack(t_stack **a, char name)
 		printf("rr%c\n", name);
 }
 
-void	rotate_stacks(t_stack **a, t_stack **b)
+void	rotate_stacks(t_stack **a, t_stack **b, t_stack **elm)
 {
 	rotate_stack(a, 0);
 	rotate_stack(b, 0);
 	printf("rr\n");
+	(*elm)->cost_in_a[1]--;
+	(*elm)->cost_in_b[1]--;
 }
 
-void	rev_rotate_stacks(t_stack **a, t_stack **b)
+void	rev_rotate_stacks(t_stack **a, t_stack **b, t_stack **elm)
 {
 	rev_rotate_stack(a, 0);
 	rev_rotate_stack(b, 0);
 	printf("rrr\n");
+	(*elm)->cost_in_a[1]--;
+	(*elm)->cost_in_b[1]--;
 }

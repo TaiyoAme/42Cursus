@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:19:24 by hehuang           #+#    #+#             */
-/*   Updated: 2023/12/22 18:43:24 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/09 15:15:53 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,25 @@ int	ft_atoi(const char *nptr)
 t_stack	*stack_new(int content)
 {
 	t_stack	*res;
+	int		*cost_a;
+	int		*cost_b;
 
 	res = malloc(sizeof(t_stack) * 1);
 	if (!res)
 		return (NULL);
+	cost_a = malloc(sizeof(int) * 2);
+	if (!cost_a)
+		return (NULL);
+	cost_b = malloc(sizeof(int) * 2);
+	if (!cost_b)
+		return (NULL);
+	cost_a[0] = 0;
+	cost_a[1] = 0;
+	cost_b[0] = 0;
+	cost_b[1] = 0;
 	res -> value = content;
 	res -> rank = 0;
+	res -> cost_in_a = cost_a;
+	res -> cost_in_b = cost_b;
 	return (res);
 }

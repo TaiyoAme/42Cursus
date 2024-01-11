@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:57:59 by hehuang           #+#    #+#             */
-/*   Updated: 2023/12/20 18:36:43 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/11 16:56:18 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,17 @@
 
 void	swap_stack(t_stack **a, char name)
 {
-	t_stack	*tmp;
+	int	tmp_val;
+	int	tmp_rank;
 
-	tmp = *a;
+	tmp_val = (*a)->value;
+	tmp_rank = (*a)->rank;
 	if (*a && (*a)-> next)
 	{
-		tmp = (*a)-> next;
-		(*a)-> next = tmp -> next;
-		tmp -> previous = (*a)-> previous;
-		(*a)-> previous = tmp;
-		tmp -> next = *a;
+		(*a)->rank = (*a)->next->rank;
+		(*a)->value = (*a)->next->value;
+		(*a)->next->rank = tmp_rank;
+		(*a)->next->value = tmp_val;
 	}
 	if (name)
 		printf("s%c\n", name);
@@ -48,4 +49,6 @@ void	push_stack(t_stack **from, t_stack **to, char name)
 		addfirst(to, node_kept);
 		printf("p%c\n", name);
 	}
+	if (stack_size(*from) == 0)
+		from = NULL;
 }

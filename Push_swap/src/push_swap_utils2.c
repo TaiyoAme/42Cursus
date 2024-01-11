@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 19:14:44 by hehuang           #+#    #+#             */
-/*   Updated: 2023/12/22 19:11:42 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/09 17:54:40 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,11 @@ void	delfirst(t_stack **a)
 	}
 	else if (*a)
 		*a = NULL;
+}
+
+int	ft_abs(int n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
 }
