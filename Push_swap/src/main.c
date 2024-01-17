@@ -6,24 +6,22 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 15:03:51 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/11 17:13:54 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/17 23:39:20 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include <unistd.h>
 
 void	ft_end(t_stack **a, t_stack **b)
 {
 	t_stack	*max;
-	int		*ctt;
 
 	max = get_max(b);
-	ctt = cost_to_top(b, &max);
+	cost_to_top(b, &max, &max->cost_in_a);
 	while ((*b)-> rank != max->rank)
 	{
-		if (ctt[0] == -1)
+		if (max->cost_in_a[2] == -1)
 			rev_rotate_stack(b, 'b');
 		else
 			rotate_stack(b, 'b');
@@ -34,15 +32,50 @@ void	ft_end(t_stack **a, t_stack **b)
 	}
 }
 
+void	tree_input(t_stack **s_list)
+{
+	t_stack	*a;
+
+	a = *s_list;
+	if (a->value > a->next->value && a->previous->value > a->value)
+		swap_stack(s_list, 'a');
+	else if (a->value > a->next->value && a->next->value > a->previous->value)
+	{
+		swap_stack(s_list, 'a');
+		rev_rotate_stack(s_list, 'a');
+	}
+	else if (a->value < a->next->value && a->next->value > a->previous->value
+		&& a->value < a->previous->value)
+	{
+		swap_stack(s_list, 'a');
+		rotate_stack(s_list, 'a');
+	}
+	else if (a->value > a->next->value && a->next->value < a->previous->value)
+		rotate_stack(s_list, 'a');
+	else
+		rev_rotate_stack(s_list, 'a');
+}
+
 void	run_push_swap(t_stack **a, t_stack **b)
 {
-	push_stack(a, b, 'b');
-	push_stack(a, b, 'b');
-	if ((*b)->rank < (*b)->next->rank)
-		swap_stack(b, 'b');
-	etablish_cost(a, b);
-	ft_rev_sort(a, b);
-	ft_end(a, b);
+	int	a_size;
+
+	a_size = stack_size(*a);
+	if (a_size == 2)
+		swap_stack(a, 'a');
+	else if (a_size == 3)
+		tree_input(a);
+	else
+	{
+		push_stack(a, b, 'b');
+		push_stack(a, b, 'b');
+		ft_rev_sort(a, b);
+		ft_end(a, b);
+	}
+	if (ft_is_sorted(a))
+		write(1, "OK\n", 3);
+	else
+		write(1, "KO\n", 3);
 }
 
 int	main(int argc, char **argv)
@@ -53,18 +86,25 @@ int	main(int argc, char **argv)
 	t_stack	*stack_list;
 	t_stack	*stack_b;
 
-	len = 0;
-	test = create_tab(--argc, ++argv, &len);
-	converted_tab = convert_tab(test);
-	stack_b = NULL;
-	if (converted_tab != NULL && check_duplicate(converted_tab, len))
+	if (argc > 1)
 	{
-		stack_list = create_list(converted_tab, len);
-		run_push_swap(&stack_list, &stack_b);
-	}
-	else
-	{
-		printf("Nope \n");
+		len = 0;
+		test = create_tab(--argc, ++argv, &len);
+		converted_tab = convert_tab(test);
+		str_tab_free(test);
+		stack_b = NULL;
+		if (converted_tab != NULL && check_duplicate(converted_tab, len))
+		{
+			stack_list = create_list(converted_tab, len);
+			if (!ft_is_sorted(&stack_list))
+				run_push_swap(&stack_list, &stack_b);
+			free(converted_tab);
+			t_stack_list_free(&stack_list, len);
+		}
+		else
+		{
+			write(1, "Error\n", 6);
+		}
 	}
 	return (0);
 }

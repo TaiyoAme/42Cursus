@@ -6,12 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:57:59 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/11 16:56:18 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/16 18:09:33 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 void	swap_stack(t_stack **a, char name)
 {
@@ -28,14 +27,18 @@ void	swap_stack(t_stack **a, char name)
 		(*a)->next->value = tmp_val;
 	}
 	if (name)
-		printf("s%c\n", name);
+	{
+		write(1, "s", 1);
+		write(1, &name, 1);
+		write(1, "\n", 1);
+	}
 }
 
 void	swap_stacks(t_stack **a, t_stack **b)
 {
 	swap_stack(a, 0);
 	swap_stack(b, 0);
-	printf("ss\n");
+	write(1, "ss\n", 3);
 }
 
 void	push_stack(t_stack **from, t_stack **to, char name)
@@ -47,7 +50,9 @@ void	push_stack(t_stack **from, t_stack **to, char name)
 		node_kept = *from;
 		delfirst(from);
 		addfirst(to, node_kept);
-		printf("p%c\n", name);
+		write(1, "p", 1);
+		write(1, &name, 1);
+		write(1, "\n", 1);
 	}
 	if (stack_size(*from) == 0)
 		from = NULL;

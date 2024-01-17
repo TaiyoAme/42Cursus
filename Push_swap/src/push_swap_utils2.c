@@ -6,12 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 19:14:44 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/09 17:54:40 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/16 17:39:58 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 int	stack_size(t_stack *a)
 {
@@ -68,4 +67,22 @@ int	ft_abs(int n)
 	if (n < 0)
 		return (-n);
 	return (n);
+}
+
+void	ft_remove_cost(t_stack **s_list)
+{
+	t_stack	*curr;
+
+	if (*s_list)
+	{
+		curr = (*s_list);
+		while (curr->cost_in_a[0] != 0)
+		{
+			curr->cost_in_a[0] = 0;
+			curr->cost_in_a[1] = 0;
+			curr->cost_in_a[2] = 0;
+			curr->cost_in_a[3] = 0;
+			curr = curr -> next;
+		}
+	}
 }

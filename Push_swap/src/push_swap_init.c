@@ -6,13 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 17:15:47 by hehuang           #+#    #+#             */
-/*   Updated: 2023/12/22 20:14:05 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/16 18:34:52 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
-#include <string.h>
 
 char	**create_tab(int argc, char **argv, int *count)
 {
@@ -40,31 +38,28 @@ char	**create_tab(int argc, char **argv, int *count)
 
 int	*convert_tab(char **str_tab)
 {
-	int	len;
-	int	i;
-	int	*res;
-	int	number_error;
+	int			len;
+	int			i;
+	int			*res;
+	long long	atol_res;
 
 	len = 0;
 	i = -1;
-	number_error = 0;
 	while (str_tab[len])
 		len++;
 	res = malloc(len * sizeof(int));
-	while (++i < len && !number_error)
+	while (++i < len)
 	{
 		if (is_number(str_tab[i]))
-			res[i] = ft_atoi(str_tab[i]);
-		else
 		{
-			number_error = 1;
-			res[i] = 0;
+			atol_res = ft_atol(str_tab[i]);
+			if (atol_res > 2147483647 || atol_res < -2147483648)
+				return (NULL);
+			res[i] = (int)atol_res;
 		}
+		else
+			return (NULL);
 	}
-	i = -1;
-	i++;//REPLACE WITH FREE STR_TAB
-	if (number_error)
-		return (NULL);//FUNCTION TO HANDLE INT ERR
 	return (res);
 }
 

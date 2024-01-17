@@ -6,14 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:19:24 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/09 15:15:53 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/16 18:39:13 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 char	*ft_strdup(const char *s)
 {
@@ -58,6 +55,8 @@ int	is_number(char *str)
 
 	i = -1;
 	len = ft_strlen(str);
+	if (str[0] == '-' || str[0] == '+')
+		i++;
 	while (++i < len)
 	{
 		if (!(str[i] >= '0' && str[i] <= '9'))
@@ -66,11 +65,11 @@ int	is_number(char *str)
 	return (1);
 }
 
-int	ft_atoi(const char *nptr)
+long long	ft_atol(const char *nptr)
 {
-	int	neg;
-	int	i;
-	int	res;
+	int			neg;
+	int			i;
+	long long	res;
 
 	neg = 1;
 	res = 0;
@@ -90,6 +89,8 @@ int	ft_atoi(const char *nptr)
 		res = (res * 10) + nptr[i] - '0';
 		i++;
 	}
+	if (res * neg > 2147483647 || res * neg < -2147483648)
+		return (2147483648);
 	return (res * neg);
 }
 
@@ -97,24 +98,19 @@ t_stack	*stack_new(int content)
 {
 	t_stack	*res;
 	int		*cost_a;
-	int		*cost_b;
 
 	res = malloc(sizeof(t_stack) * 1);
 	if (!res)
 		return (NULL);
-	cost_a = malloc(sizeof(int) * 2);
+	cost_a = malloc(sizeof(int) * 4);
 	if (!cost_a)
-		return (NULL);
-	cost_b = malloc(sizeof(int) * 2);
-	if (!cost_b)
 		return (NULL);
 	cost_a[0] = 0;
 	cost_a[1] = 0;
-	cost_b[0] = 0;
-	cost_b[1] = 0;
+	cost_a[2] = 0;
+	cost_a[3] = 0;
 	res -> value = content;
 	res -> rank = 0;
 	res -> cost_in_a = cost_a;
-	res -> cost_in_b = cost_b;
 	return (res);
 }
