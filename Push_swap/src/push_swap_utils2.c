@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 19:14:44 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/16 17:39:58 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/19 15:20:30 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,6 @@ void	delfirst(t_stack **a)
 		*a = NULL;
 }
 
-int	ft_abs(int n)
-{
-	if (n < 0)
-		return (-n);
-	return (n);
-}
-
 void	ft_remove_cost(t_stack **s_list)
 {
 	t_stack	*curr;
@@ -85,4 +78,24 @@ void	ft_remove_cost(t_stack **s_list)
 			curr = curr -> next;
 		}
 	}
+}
+
+int	ft_is_sorted(t_stack **a)
+{
+	t_stack	*curr;
+	int		i;
+	int		rank;
+
+	curr = (*a)->next;
+	i = 0;
+	rank = (*a)->rank;
+	while (++i < stack_size(*a))
+	{
+		if (curr->rank <= rank)
+			return (0);
+		else
+			rank = curr->rank;
+		curr = curr->next;
+	}
+	return (1);
 }

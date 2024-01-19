@@ -6,11 +6,12 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:19:24 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/16 18:39:13 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/19 15:56:21 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
 
 char	*ft_strdup(const char *s)
 {
@@ -28,10 +29,11 @@ char	*ft_strdup(const char *s)
 		res[i] = s[i];
 		i++;
 	}
+	printf("%s\n", res);
 	return (res);
 }
 
-int	ft_tabcat(char **dest, char *src)
+void	ft_tabcat(char ***dest, char *src, int *index)
 {
 	char	**w_tab;
 	int		tab_len;
@@ -42,10 +44,11 @@ int	ft_tabcat(char **dest, char *src)
 	w_tab = ft_split(src);
 	while (i < tab_len)
 	{
-		*dest++ = ft_strdup(w_tab[i]);
+		(*dest)[*index] = ft_strdup(w_tab[i]);
 		i++;
+		(*index)++;
 	}
-	return (tab_len - 1);
+	(*index)--;
 }
 
 int	is_number(char *str)

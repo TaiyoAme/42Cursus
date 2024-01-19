@@ -6,11 +6,12 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 17:15:47 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/16 18:34:52 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/19 16:06:52 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
 
 char	**create_tab(int argc, char **argv, int *count)
 {
@@ -19,17 +20,19 @@ char	**create_tab(int argc, char **argv, int *count)
 	char	**res;
 
 	i = -1;
-	j = 0;
 	while (++i < argc)
 		*count += count_words(argv[i]);
 	res = malloc((*count + 1) * sizeof(char *));
 	i = 0;
+	j = 0;
+	printf("size = %d\n", *count);
 	while (i < *count)
 	{
+		printf("i = %d | j = %d\n", i, j);
 		if (count_words(argv[j]) > 1)
-			i += ft_tabcat(&res[i], argv[j++]);
+			ft_tabcat(&res, argv[j++], &i);
 		else
-			res[i] = ft_strdup(argv[i]);
+			res[i] = ft_strdup(argv[j++]);
 		i++;
 	}
 	res[i] = 0;

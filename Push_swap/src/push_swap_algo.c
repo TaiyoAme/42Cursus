@@ -44,9 +44,9 @@ void	next_step(t_stack **a, t_stack **b, t_stack **min)
 		&& (*min)->cost_in_a[3] != 0 && (*min)->cost_in_a[1] != 0)
 	{
 		if ((*min)->cost_in_a[0] == 1)
-			rotate_stacks(b, a, min);
+			rotate_stacks(b, a, min,1);
 		if ((*min)->cost_in_a[0] == -1)
-			rev_rotate_stacks(b, a, min);
+			rev_rotate_stacks(b, a, min,1);
 	}
 	while ((*min)->cost_in_a[1] != 0)
 	{
@@ -80,22 +80,3 @@ void	ft_rev_sort(t_stack **a, t_stack **b)
 	}
 }
 
-int	ft_is_sorted(t_stack **a)
-{
-	t_stack	*curr;
-	int		i;
-	int		rank;
-
-	curr = (*a)->next;
-	i = 0;
-	rank = (*a)->rank;
-	while (++i < stack_size(*a))
-	{
-		if (curr->rank <= rank)
-			return (0);
-		else
-			rank = curr->rank;
-		curr = curr->next;
-	}
-	return (1);
-}

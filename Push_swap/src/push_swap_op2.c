@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 17:30:30 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/16 18:08:24 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/18 16:09:23 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,48 @@
 
 void	rotate_stack(t_stack **a, char name)
 {
-	*a = (*a)-> next;
-	if (name)
+	if (*a)
 	{
-		write(1, "r", 1);
-		write(1, &name, 1);
-		write(1, "\n", 1);
+		*a = (*a)-> next;
+		if (name)
+		{
+			write(1, "r", 1);
+			write(1, &name, 1);
+			write(1, "\n", 1);
+		}
 	}
 }
 
 void	rev_rotate_stack(t_stack **a, char name)
 {
-	*a = (*a)-> previous;
-	if (name)
+	if (*a)
 	{
-		write(1, "rr", 2);
-		write(1, &name, 1);
-		write(1, "\n", 1);
+		*a = (*a)-> previous;
+		if (name)
+		{
+			write(1, "rr", 2);
+			write(1, &name, 1);
+			write(1, "\n", 1);
+		}
 	}
 }
 
-void	rotate_stacks(t_stack **a, t_stack **b, t_stack **elm)
+void	rotate_stacks(t_stack **a, t_stack **b, t_stack **elm, int name)
 {
 	rotate_stack(a, 0);
 	rotate_stack(b, 0);
-	write(1, "rr\n", 3);
+	if (name)
+		write(1, "rr\n", 3);
 	(*elm)->cost_in_a[1]--;
 	(*elm)->cost_in_a[3]--;
 }
 
-void	rev_rotate_stacks(t_stack **a, t_stack **b, t_stack **elm)
+void	rev_rotate_stacks(t_stack **a, t_stack **b, t_stack **elm, int name)
 {
 	rev_rotate_stack(a, 0);
 	rev_rotate_stack(b, 0);
-	write(1, "rrr\n", 4);
+	if (name)
+		write(1, "rrr\n", 4);
 	(*elm)->cost_in_a[1]--;
 	(*elm)->cost_in_a[3]--;
 }

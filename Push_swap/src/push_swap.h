@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 13:58:59 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/17 22:45:54 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/19 15:41:12 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char		*ft_strdup(const char *s);
 int			*convert_tab(char **str_tab);
 int			count_words(char const *str);
 int			ft_strlen(char const *str);
-int			ft_tabcat(char **dest, char *src);
+void		ft_tabcat(char ***dest, char *src, int *index);
 int			is_number(char *str);
 long long	ft_atol(const char *nptr);
 int			check_duplicate(int *tab, int len);
@@ -52,13 +52,16 @@ void		ft_sort_a(t_stack **a);
 void		ft_end(t_stack **a, t_stack **b);
 int			ft_is_sorted(t_stack **a);
 void		ft_remove_cost(t_stack **s_list);
+void		run_push_swap(t_stack **a, t_stack **b);
+void		push_swap(int argc, char **argv);
 //operation
 void		swap_stack(t_stack **a, char name);
 void		push_stack(t_stack **from, t_stack **to, char name);
 void		rotate_stack(t_stack **a, char name);
 void		rev_rotate_stack(t_stack **a, char name);
-void		rotate_stacks(t_stack **a, t_stack **b, t_stack **elm);
-void		rev_rotate_stacks(t_stack **a, t_stack **b, t_stack **elm);
+void		swap_stacks(t_stack **a, t_stack **b, int name);
+void		rotate_stacks(t_stack **a, t_stack **b, t_stack **elm, int n);
+void		rev_rotate_stacks(t_stack **a, t_stack **b, t_stack **elm, int n);
 //Free things
 void		str_tab_free(char **str_tab);
 void		t_stack_list_free(t_stack **s_list, int len);
