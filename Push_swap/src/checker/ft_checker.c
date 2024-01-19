@@ -95,9 +95,9 @@ int	main(int argc, char **argv)
 
 	s_list = init_checker_stack(argc, argv);
 	s_b = NULL;
-	if (!s_list)
+	if (!s_list && argc != 1)
 		write(1, "Error\n", 6);
-	else
+	else if (s_list)
 	{
 		u_input = malloc(4 * sizeof(char));
 		while (u_input[0] != '\n')
