@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:57:59 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/18 16:10:29 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/19 17:04:38 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	swap_stack(t_stack **a, char name)
 	int	tmp_val;
 	int	tmp_rank;
 
-	
 	if (*a && (*a)-> next)
 	{
 		tmp_val = (*a)->value;

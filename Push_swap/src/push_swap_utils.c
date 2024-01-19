@@ -6,12 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:19:24 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/19 15:56:21 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/19 17:26:50 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 char	*ft_strdup(const char *s)
 {
@@ -29,7 +28,6 @@ char	*ft_strdup(const char *s)
 		res[i] = s[i];
 		i++;
 	}
-	printf("%s\n", res);
 	return (res);
 }
 
@@ -77,7 +75,7 @@ long long	ft_atol(const char *nptr)
 	neg = 1;
 	res = 0;
 	i = 0;
-	while (nptr[i] == ' ' || nptr[i] == '\n'
+	while (nptr[i] == '0' || nptr[i] == ' ' || nptr[i] == '\n'
 		|| nptr[i] == '\t' || nptr[i] == '\f'
 		|| nptr[i] == '\v' || nptr[i] == '\r')
 		i++;
@@ -92,7 +90,7 @@ long long	ft_atol(const char *nptr)
 		res = (res * 10) + nptr[i] - '0';
 		i++;
 	}
-	if (res * neg > 2147483647 || res * neg < -2147483648)
+	if (i > 11 || res * neg > 2147483647 || res * neg < -2147483648)
 		return (2147483648);
 	return (res * neg);
 }

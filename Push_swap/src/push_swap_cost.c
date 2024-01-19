@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:05:57 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/16 17:49:17 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/19 17:36:58 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_stack	*get_max(t_stack **s_list)
 	return (res);
 }
 
-t_stack	*get_nearest(t_stack **b, int rank)
+static t_stack	*get_nearest(t_stack **b, int rank)
 {
 	t_stack	*near;
 	t_stack	*curr;
@@ -74,7 +74,7 @@ t_stack	*get_nearest(t_stack **b, int rank)
 	return (near);
 }
 
-void	set_stack(t_stack **s_list, t_stack **elmt)
+static void	set_stack(t_stack **s_list, t_stack **elmt)
 {
 	t_stack	*near;
 
