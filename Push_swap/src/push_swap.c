@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:14:53 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/18 15:16:42 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/25 23:07:35 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,21 @@ void	tree_input(t_stack **s_list)
 		rev_rotate_stack(s_list, 'a');
 }
 
+void	five_input(t_stack **a, t_stack **b)
+{
+	t_stack	*lowest;
+
+	lowest = find_cheapest(*a);
+	next_step(a, NULL, &lowest);
+	push_stack(a, b, 'b');
+	lowest = find_cheapest(*a);
+	next_step(a, NULL, &lowest);
+	push_stack(a, b, 'b');
+	tree_input(a);
+	push_stack(b, a, 'a');
+	push_stack(b, a, 'a');
+}
+
 void	run_push_swap(t_stack **a, t_stack **b)
 {
 	int	a_size;
@@ -64,6 +79,10 @@ void	run_push_swap(t_stack **a, t_stack **b)
 		swap_stack(a, 'a');
 	else if (a_size == 3)
 		tree_input(a);
+	else if (a_size == 5)
+	{
+		five_input(a, b);
+	}
 	else
 	{
 		push_stack(a, b, 'b');

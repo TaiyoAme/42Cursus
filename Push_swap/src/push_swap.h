@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 13:58:59 by hehuang           #+#    #+#             */
-/*   Updated: 2024/01/19 17:37:07 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/01/25 22:39:52 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void		delfirst(t_stack **a);
 void		cost_to_top(t_stack **s_list, t_stack **elmt, int **cost_a);
 void		establish_cost(t_stack **a, t_stack **b);
 //algo
+t_stack		*find_cheapest(t_stack *b);
+void		next_step(t_stack **a, t_stack **b, t_stack **min);
 void		ft_rev_sort(t_stack **a, t_stack **b);
 void		ft_end(t_stack **a, t_stack **b);
 int			ft_is_sorted(t_stack **a);
