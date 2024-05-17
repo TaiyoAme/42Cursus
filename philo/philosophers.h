@@ -6,14 +6,14 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:02:15 by hehuang           #+#    #+#             */
-/*   Updated: 2024/05/14 17:31:14 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/05/17 16:46:34 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-# include "../libft/libft.h"
+# include "libft/libft.h"
 
 # include <bits/pthreadtypes.h>
 # include <pthread.h>
@@ -23,6 +23,9 @@
 # include <stdio.h>
 
 # define ERROR_PARAM 0
+# define ERROR_PHILOS "Error:\nPhilo number must be between 1 and 200"
+# define ERROR_TIMER "Error:\nTimer value must be an int higher than 60"
+# define ERROR_MEAL_NUMBER "Error:\nmeal number must be a postive value"
 
 enum e_action
 {
@@ -55,7 +58,7 @@ typedef struct s_process
 	int				die_in;
 	int				eat_time;
 	int				sl_duration;
-	int				ready;
+	int				end;
 	int				round;
 	int				o_dead;
 	int				finished;
@@ -71,9 +74,12 @@ void		display_msg(enum e_action action, t_philo *philo);
 void		*life_cycle(void *ph);
 void		free_process(t_process *process);
 void		*monitor(void *process);
+int			check_death(t_process *process);
+int			ft_end(t_process *process);
+int			all_ate(t_process *process);
 
 //UTILS
-int			ft_nb_ret_size(const char *nptr);
+int			ft_check_param(const char *nptr, int min, int max);
 size_t		get_current_time(void);
 int			ft_usleep(size_t milliseconds);
 void		ft_puttime_fd(size_t time, int fd);

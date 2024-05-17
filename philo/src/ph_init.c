@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 18:38:48 by hehuang           #+#    #+#             */
-/*   Updated: 2024/05/14 17:38:43 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/05/15 15:43:03 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	*init_process(int nb, int die_in, int diner_time, int sl_duration)
 	res->sl_duration = sl_duration;
 	res->o_dead = 0;
 	res->round = -1;
+	res->end = 0;
 	res->start_time = 0;
 	res->finished = 0;
 	i = pthread_mutex_init(&(res->writing), NULL);
@@ -86,7 +87,6 @@ t_process	*init_ph(char *nb, char *die_in, char *eat_t, char *sleep_t)
 		process->philos[i] = create_philo(i, process);
 		pthread_mutex_init(&(process->forks[i]), NULL);
 	}
-	process->ready = 0;
 	give_forks(process);
 	return (process);
 }

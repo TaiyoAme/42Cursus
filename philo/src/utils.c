@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 18:59:25 by hehuang           #+#    #+#             */
-/*   Updated: 2024/05/08 16:44:59 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/05/16 20:59:24 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include <stddef.h>
 #include <stdio.h>
 
-int	ft_nb_ret_size(const char *nptr)
+int	ft_check_param(const char *nptr, int min, int max)
 {
-	int					i;
-	unsigned long long	res;
+	int	i;
+	int	res;
 
 	res = 0;
 	i = 0;
@@ -29,7 +29,11 @@ int	ft_nb_ret_size(const char *nptr)
 	}
 	if (i > 20 || nptr[i] != '\0')
 		return (0);
-	return (i);
+	else if (min > 0 && res < min)
+		return (0);
+	else if (max > 0 && res > max)
+		return (0);
+	return (1);
 }
 
 int	check_round(t_process *process)

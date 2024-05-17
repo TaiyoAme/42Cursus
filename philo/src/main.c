@@ -6,22 +6,24 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:58:35 by hehuang           #+#    #+#             */
-/*   Updated: 2024/05/14 18:53:37 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/05/17 18:12:54 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 #include <pthread.h>
 #include <stdio.h>
+#include <unistd.h>
 
 int	entries_check(char *nb, char *die_in, char *diner_time, char *sl_duration)
 {
-	if (ft_nb_ret_size(nb)
-		&& ft_nb_ret_size(die_in)
-		&& ft_nb_ret_size(diner_time)
-		&& ft_nb_ret_size(sl_duration))
-		return (1);
-	return (0);
+	if (!ft_check_param(nb, 1, 200))
+		return (printf("%s\n", ERROR_PHILOS), 0);
+	else if (!ft_check_param(die_in, 60, -1)
+		|| !ft_check_param(diner_time, 60, -1)
+		|| !ft_check_param(sl_duration, 60, -1))
+		return (printf("%s\n", ERROR_TIMER), 0);
+	return (1);
 }
 
 void	launch_threads(t_process *process)
@@ -31,6 +33,13 @@ void	launch_threads(t_process *process)
 
 	i = -1;
 	process->start_time = get_current_time();
+	if (process->ph_nb == 1)
+	{
+		display_msg(L_FORK, process->philos[0]);
+		ft_usleep(process->die_in);
+		display_msg(DEAD, process->philos[0]);
+		return ;
+	}
 	while (++i < process->ph_nb)
 	{
 		pthread_create(&(process->philos[i]->ph_thread), \
@@ -49,7 +58,7 @@ void	display_msg(enum e_action action, t_philo *philo)
 {
 	size_t	time;
 
-	if (philo->is_dead)
+	if (philo->is_dead || philo->process->end)
 		return ;
 	pthread_mutex_lock(&(philo->process->writing));
 	time = get_current_time() - philo->process->start_time;
@@ -96,12 +105,16 @@ int	main(int argc, char *argv[])
 	else if (entries_check(argv[0], argv[1], argv[2], argv[3]))
 	{
 		process = init_ph(argv[0], argv[1], argv[2], argv[3]);
-		if (argc == 5 && ft_nb_ret_size(argv[4]))
+		if (argc == 5 && ft_check_param(argv[4], 1, -1))
 		{
 			process->round = ft_atoi(argv[4]);
 		}
 		else if (argc == 5)
-		{}//FREE
+		{
+			printf("%s\n", ERROR_MEAL_NUMBER);
+			free_process(process);
+			return (0);
+		}
 		launch_threads(process);
 		free_process(process);
 	}
