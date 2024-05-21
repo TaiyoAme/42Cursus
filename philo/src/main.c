@@ -5,92 +5,118 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 19:58:05 by hehuang           #+#    #+#             */
-/*   Updated: 2024/04/12 18:35:57 by hehuang          ###   ########.fr       */
+/*   Created: 2024/03/11 16:58:35 by hehuang           #+#    #+#             */
+/*   Updated: 2024/05/17 18:12:54 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../philosophers.h"
+#include <pthread.h>
+#include <stdio.h>
+#include <unistd.h>
 
-int	destr(t_data *data)
+int	entries_check(char *nb, char *die_in, char *diner_time, char *sl_duration)
 {
-	free_t_data(data);
-	exit(0);
-	return (0);
+	if (!ft_check_param(nb, 1, 200))
+		return (printf("%s\n", ERROR_PHILOS), 0);
+	else if (!ft_check_param(die_in, 60, -1)
+		|| !ft_check_param(diner_time, 60, -1)
+		|| !ft_check_param(sl_duration, 60, -1))
+		return (printf("%s\n", ERROR_TIMER), 0);
+	return (1);
 }
 
-void	game_end(t_data *data, int win)
+void	launch_threads(t_process *process)
 {
-	write(1, "---------------\n", 16);
-	if (win)
-		write(1, "|  YOU WIN !  |\n", 16);
-	else
-		write(1, "| YOU LOOSE ! |\n", 16);
-	write(1, "---------------\n", 16);
-	destr(data);
+	pthread_t	thread;
+	int			i;
+
+	i = -1;
+	process->start_time = get_current_time();
+	if (process->ph_nb == 1)
+	{
+		display_msg(L_FORK, process->philos[0]);
+		ft_usleep(process->die_in);
+		display_msg(DEAD, process->philos[0]);
+		return ;
+	}
+	while (++i < process->ph_nb)
+	{
+		pthread_create(&(process->philos[i]->ph_thread), \
+			NULL, life_cycle, process->philos[i]);
+	}
+	i = -1;
+	pthread_create(&thread, NULL, monitor, process);
+	pthread_join(thread, NULL);
+	while (++i < process->ph_nb)
+	{
+		pthread_join(process->philos[i]->ph_thread, NULL);
+	}
 }
 
-void	is_touched_by_vil(t_data *data)
+void	display_msg(enum e_action action, t_philo *philo)
+{
+	size_t	time;
+
+	if (philo->is_dead || philo->process->end)
+		return ;
+	pthread_mutex_lock(&(philo->process->writing));
+	time = get_current_time() - philo->process->start_time;
+	ft_puttime_fd(time, 1);
+	if (action == EATING)
+		printf(" | %d is eating\n", philo->id);
+	else if (action == SLEEPING)
+		printf(" | %d is sleeping\n", philo->id);
+	else if (action == THINKING)
+		printf(" | %d is thinking\n", philo->id);
+	else if (action == L_FORK)
+		printf(" | %d take his left_fork\n", philo->id);
+	else if (action == R_FORK)
+		printf(" | %d take his right_fork\n", philo->id);
+	else if (action == DEAD)
+		printf(" | %d died\n", philo->id);
+	pthread_mutex_unlock(&(philo->process->writing));
+}
+
+void	free_process(t_process *process)
 {
 	int	i;
 
-	i = 0;
-	while (data->villain[i])
+	i = -1;
+	while (++i < process->ph_nb)
 	{
-		if (data->villain[i]->x == data->player->x
-			&& data->villain[i]->y == data->player->y)
-			game_end(data, 0);
-		i++;
+		free(process->philos[i]);
+		pthread_mutex_destroy(&(process->forks[i]));
 	}
+	free(process->philos);
+	free(process->forks);
+	pthread_mutex_destroy(&(process->writing));
+	free(process);
 }
 
-int	on_keypress(int keysym, t_data *data)
+int	main(int argc, char *argv[])
 {
-	if (keysym == 65307)
-		destr(data);
-	else if (keysym == 119 || keysym == 97 || keysym == 115 || keysym == 100)
-	{
-		vil_step(data);
-		if (keysym == 119)
-			up(data, NULL);
-		else if (keysym == 97)
-			left(data, NULL);
-		else if (keysym == 115)
-			down(data, NULL);
-		else if (keysym == 100)
-			right(data, NULL);
-		add_vil(data);
-		display_map(data);
-	}
-	is_touched_by_vil(data);
-	return (0);
-}
+	t_process	*process;
 
-int	main(int argc, char **argv)
-{
-	t_data	*d;
-	int		fd;
-
-	if (argc == 2 && extension_check(argv[1]))
+	argc--;
+	argv++;
+	if (argc != 4 && argc != 5)
+		return (ERROR_PARAM);
+	else if (entries_check(argv[0], argv[1], argv[2], argv[3]))
 	{
-		fd = open(argv[1], O_RDONLY);
-		if (fd == -1)
+		process = init_ph(argv[0], argv[1], argv[2], argv[3]);
+		if (argc == 5 && ft_check_param(argv[4], 1, -1))
 		{
-			close(fd);
-			write (1, "Error:\nPath error\n", 18);
-			return (1);
+			process->round = ft_atoi(argv[4]);
 		}
-		d = init_data(fd);
-		close(fd);
-		if (d)
+		else if (argc == 5)
 		{
-			mlx_hook(d->win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, d);
-			mlx_hook(d->win_ptr, DestroyNotify, StructureNotifyMask, &destr, d);
-			mlx_loop_hook(d->mlx_ptr, &update_anim, d);
-			mlx_loop(d->mlx_ptr);
+			printf("%s\n", ERROR_MEAL_NUMBER);
+			free_process(process);
+			return (0);
 		}
+		launch_threads(process);
+		free_process(process);
 	}
-	else if (argc != 2)
-		write (1, "Error:\nArg number error\n", 24);
 	return (0);
 }
