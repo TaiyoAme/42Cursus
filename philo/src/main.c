@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:58:35 by hehuang           #+#    #+#             */
-/*   Updated: 2024/05/17 18:12:54 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/05/25 20:50:13 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,23 @@ void	display_msg(enum e_action action, t_philo *philo)
 {
 	size_t	time;
 
-	if (philo->is_dead || philo->process->end)
+	if (check_end(philo->process))
 		return ;
 	pthread_mutex_lock(&(philo->process->writing));
 	time = get_current_time() - philo->process->start_time;
 	ft_puttime_fd(time, 1);
 	if (action == EATING)
-		printf(" | %d is eating\n", philo->id);
+		printf(" %d is eating %d\n", philo->id, philo->meals_eaten + 1);
 	else if (action == SLEEPING)
-		printf(" | %d is sleeping\n", philo->id);
+		printf(" %d is sleeping\n", philo->id);
 	else if (action == THINKING)
-		printf(" | %d is thinking\n", philo->id);
+		printf(" %d is thinking\n", philo->id);
 	else if (action == L_FORK)
-		printf(" | %d take his left_fork\n", philo->id);
+		printf(" %d has taken a fork\n", philo->id);
 	else if (action == R_FORK)
-		printf(" | %d take his right_fork\n", philo->id);
+		printf(" %d has taken a fork\n", philo->id);
 	else if (action == DEAD)
-		printf(" | %d died\n", philo->id);
+		printf(" %d died\n", philo->id);
 	pthread_mutex_unlock(&(philo->process->writing));
 }
 
@@ -101,7 +101,7 @@ int	main(int argc, char *argv[])
 	argc--;
 	argv++;
 	if (argc != 4 && argc != 5)
-		return (ERROR_PARAM);
+		printf("%s\n", ERROR_PARAM);
 	else if (entries_check(argv[0], argv[1], argv[2], argv[3]))
 	{
 		process = init_ph(argv[0], argv[1], argv[2], argv[3]);

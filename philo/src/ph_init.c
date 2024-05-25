@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 18:38:48 by hehuang           #+#    #+#             */
-/*   Updated: 2024/05/15 15:43:03 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/05/25 19:20:35 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@ t_philo	*create_philo(int id, t_process *process)
 	res->last_meal = 0;
 	res->is_sleeping = 0;
 	res->meals_eaten = 0;
+	res->finish = 0;
 	res->process = process;
+	pthread_mutex_init(&(res->meal), NULL);
 	return (res);
 }
 
 void	*init_process(int nb, int die_in, int diner_time, int sl_duration)
 {
 	t_process	*res;
-	int			i;
 
 	res = malloc(sizeof(t_process));
 	if (!res)
@@ -48,7 +49,8 @@ void	*init_process(int nb, int die_in, int diner_time, int sl_duration)
 	res->end = 0;
 	res->start_time = 0;
 	res->finished = 0;
-	i = pthread_mutex_init(&(res->writing), NULL);
+	pthread_mutex_init(&(res->writing), NULL);
+	pthread_mutex_init(&(res->end_check), NULL);
 	return (res);
 }
 

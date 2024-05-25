@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:02:15 by hehuang           #+#    #+#             */
-/*   Updated: 2024/05/17 16:46:34 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/05/25 19:30:56 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/time.h>
 # include <stdio.h>
 
-# define ERROR_PARAM 0
+# define ERROR_PARAM "Error:\nNumber of arguments not valid"
 # define ERROR_PHILOS "Error:\nPhilo number must be between 1 and 200"
 # define ERROR_TIMER "Error:\nTimer value must be an int higher than 60"
 # define ERROR_MEAL_NUMBER "Error:\nmeal number must be a postive value"
@@ -45,11 +45,13 @@ typedef struct s_philo
 	int					is_sleeping;
 	int					is_dead;
 	int					meals_eaten;
+	int					finish;
 //time
 	size_t				last_meal;
 	struct s_process	*process;
 	pthread_mutex_t		*l_fork;
 	pthread_mutex_t		*r_fork;
+	pthread_mutex_t		meal;
 }	t_philo;
 
 typedef struct s_process
@@ -66,6 +68,7 @@ typedef struct s_process
 	t_philo			**philos;
 	pthread_mutex_t	writing;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	end_check;
 }	t_process;
 
 t_process	*init_ph(char *nb, char *die_in, char *eat_t, char *sleep_t);
@@ -77,6 +80,7 @@ void		*monitor(void *process);
 int			check_death(t_process *process);
 int			ft_end(t_process *process);
 int			all_ate(t_process *process);
+int			check_end(t_process *process);
 
 //UTILS
 int			ft_check_param(const char *nptr, int min, int max);
