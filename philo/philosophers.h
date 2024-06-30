@@ -73,7 +73,7 @@ typedef struct s_process
 
 t_process	*init_ph(char *nb, char *die_in, char *eat_t, char *sleep_t);
 void		launch_threads(t_process *process);
-void		display_msg(enum e_action action, t_philo *philo);
+int			display_msg(enum e_action action, t_philo *philo);
 void		*life_cycle(void *ph);
 void		free_process(t_process *process);
 void		*monitor(void *process);

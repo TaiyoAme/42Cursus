@@ -6,7 +6,7 @@
 #    By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/05 16:12:51 by hehuang           #+#    #+#              #
-#    Updated: 2024/05/09 18:54:22 by hehuang          ###   ########.fr        #
+#    Updated: 2024/05/29 20:03:33 by hehuang          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBFT = ./libft/libft.a
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=thread
 
 all: $(NAME)
 

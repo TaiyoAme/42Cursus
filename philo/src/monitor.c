@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:15:50 by hehuang           #+#    #+#             */
-/*   Updated: 2024/05/25 21:09:27 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/06/30 18:59:04 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ int	check_death(t_process *process)
 			(size_t)process->die_in && time != 0)
 		{
 			display_msg(DEAD, process->philos[i]);
+			pthread_mutex_lock(&(process->end_check));
 			process->philos[i]->is_dead = 1;
+			pthread_mutex_unlock(&(process->end_check));
 			return (1);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 18:38:48 by hehuang           #+#    #+#             */
-/*   Updated: 2024/05/25 19:20:35 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/06/30 18:01:12 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_philo	*create_philo(int id, t_process *process)
 	t_philo	*res;
 
 	res = malloc(sizeof(t_philo));
-	res->id = id;
+	res->id = id + 1;
 	res->is_dead = 0;
 	res->is_eating = 0;
 	res->last_meal = 0;

@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:58:35 by hehuang           #+#    #+#             */
-/*   Updated: 2024/05/25 20:50:13 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/06/30 19:00:29 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,17 @@ void	launch_threads(t_process *process)
 	}
 }
 
-void	display_msg(enum e_action action, t_philo *philo)
+int	display_msg(enum e_action action, t_philo *philo)
 {
 	size_t	time;
 
-	if (check_end(philo->process))
-		return ;
 	pthread_mutex_lock(&(philo->process->writing));
+	if (!philo)
+		return (1);
+	if (check_end(philo->process))
+	{
+		return (pthread_mutex_unlock(&(philo->process->writing)));
+	}
 	time = get_current_time() - philo->process->start_time;
 	ft_puttime_fd(time, 1);
 	if (action == EATING)
@@ -75,7 +79,7 @@ void	display_msg(enum e_action action, t_philo *philo)
 		printf(" %d has taken a fork\n", philo->id);
 	else if (action == DEAD)
 		printf(" %d died\n", philo->id);
-	pthread_mutex_unlock(&(philo->process->writing));
+	return (pthread_mutex_unlock(&(philo->process->writing)));
 }
 
 void	free_process(t_process *process)
@@ -116,7 +120,7 @@ int	main(int argc, char *argv[])
 			return (0);
 		}
 		launch_threads(process);
-		free_process(process);
+	//	free_process(process);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 18:59:25 by hehuang           #+#    #+#             */
-/*   Updated: 2024/05/16 20:59:24 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/06/30 18:08:55 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,40 +17,24 @@
 
 int	ft_check_param(const char *nptr, int min, int max)
 {
-	int	i;
-	int	res;
+	int					i;
+	unsigned long long	res;
 
 	res = 0;
 	i = 0;
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
 		res = (res * 10) + nptr[i] - '0';
+		if (res > 2147483647)
+			return (0);
 		i++;
 	}
-	if (i > 20 || nptr[i] != '\0')
+	if (nptr[i] != '\0')
 		return (0);
-	else if (min > 0 && res < min)
+	else if (min > 0 && (int) res < min)
 		return (0);
-	else if (max > 0 && res > max)
+	else if (max > 0 && (int) res > max)
 		return (0);
-	return (1);
-}
-
-int	check_round(t_process *process)
-{
-	int	i;
-
-	i = -1;
-	while (++i < process->ph_nb)
-	{
-		if (process->philos[i]->meals_eaten != process->round)
-			return (0);
-		if (process->philos[i]->last_meal - process->die_in < 0)
-		{
-			process->philos[i]->is_dead = 1;
-			return (0);
-		}
-	}
 	return (1);
 }
 
