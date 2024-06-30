@@ -120,7 +120,7 @@ int	main(int argc, char *argv[])
 			return (0);
 		}
 		launch_threads(process);
-	//	free_process(process);
+		free_process(process);
 	}
 	return (0);
 }
