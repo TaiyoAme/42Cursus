@@ -6,7 +6,7 @@
 #    By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/16 20:45:31 by hehuang           #+#    #+#              #
-#    Updated: 2023/10/25 19:26:43 by hehuang          ###   ########.fr        #
+#    Updated: 2024/09/05 14:39:22 by hehuang          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ all: ${NAME}
 ${NAME}: ${OBJS}
 	ar rcs  ${NAME} ${OBJS}
 
-.o.c:
+%.o: %.c
 	${CC} ${CFLAGS} -I includes -c $< -o ${<:.c=.o}
 
 clean:
