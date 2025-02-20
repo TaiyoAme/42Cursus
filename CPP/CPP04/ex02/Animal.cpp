@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 16:30:19 by hehuang           #+#    #+#             */
-/*   Updated: 2024/12/25 16:05:00 by hehuang          ###   ########.fr       */
+/*   Updated: 2025/02/20 15:34:52 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ Animal	&Animal::operator=(Animal const &copy)
 Animal::~Animal()
 {
 	std::cout << "Animal destructor called" << std::endl;
-}
-
-void Animal::makeSound () const
-{
-	std::cout << "test sound animal" << std::endl;
 }
 
 std::string Animal::getType() const

@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 16:30:23 by hehuang           #+#    #+#             */
-/*   Updated: 2024/12/25 16:04:57 by hehuang          ###   ########.fr       */
+/*   Updated: 2025/02/20 15:33:50 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ class Animal
 {
 public:
 	virtual ~Animal();
-	virtual void makeSound() const;
-	std::string getType() const;
+	virtual void makeSound() const = 0;
+	virtual std::string getType() const;
 
 protected:
 	std::string type_;
