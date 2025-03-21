@@ -69,14 +69,14 @@ void MateriaSource::learnMateria(AMateria *m)
 			return ;
 		}
 	}
-	std::cout << "Spellbook full" << std::endl;
+	std::cerr << "Spellbook full" << std::endl;
 }
 
 AMateria *MateriaSource::createMateria(std::string const &type)
 {
 	if (type != "ice" && type != "cure")
 	{
-		std::cout << "Type incorrect !" << std::endl;
+		std::cerr << "Type incorrect !" << std::endl;
 	}
 	for (int i = 0; i < 4; i ++)
 	{
@@ -85,6 +85,6 @@ AMateria *MateriaSource::createMateria(std::string const &type)
 			return this->spellbook_[i]->clone();
 		}
 	}
-	std::cout << "Type not in spellbook !" << std::endl;
+	std::cerr << "Type not in spellbook !" << std::endl;
 	return (NULL);
 }

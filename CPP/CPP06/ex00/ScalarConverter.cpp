@@ -6,12 +6,13 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:28:50 by hehuang           #+#    #+#             */
-/*   Updated: 2025/01/24 18:24:01 by hehuang          ###   ########.fr       */
+/*   Updated: 2025/03/21 23:24:50 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
 #include <iostream>
+#include <cmath>
 #include <string>
 
 ScalarConverter::ScalarConverter(){};
@@ -46,6 +47,11 @@ bool ScalarConverter::is_displayable(float val)
 	return (false);
 }
 
+bool hasDecimal(double value)
+{
+    return value != std::floor(value);
+}
+
 bool ScalarConverter::is_numeric(std::string val)
 {
 	double max_val[2] = {2147483647.0, -2147483648.0};
@@ -60,8 +66,12 @@ bool ScalarConverter::is_numeric(std::string val)
 			std::cout << "Non displayable\n";
 		else
 			std::cout << static_cast<int>(res) << "\n";
-		std::cout	<< "float: " << val << "\n"
+		if (hasDecimal(res))
+			std::cout	<< "float: " << res << "f" << "\n"
 					<< "double: " << static_cast<double>(res) << std::endl;
+		else
+			std::cout	<< "float: " << res << ".0f" << "\n"
+					<< "double: " << static_cast<double>(res) << ".0" << std::endl;
 		return (true);
 	}
 	catch (const std::exception& e)
@@ -74,9 +84,37 @@ bool ScalarConverter::is_numeric(std::string val)
     }
 }
 
+bool	ScalarConverter::check_arg(std::string argv)
+{
+	int i = -1;
+	int point = 0;
+	while (argv[++i])
+	{
+		if (i == 0 && (argv[i] == '+' || argv[i] == '-'))
+			i++;
+		if (!(argv[i] >= '0' && argv[i] <= '9' ) && argv[i]!= '.' && argv[i] != 'f')
+			return (false);
+		if (argv[i] == 'f' && argv[i + 1])
+			return (false);
+		if (argv[i] == '.')
+			point ++;
+	}
+	if (point > 1)
+		return (false);
+	return (true);
+}
+
 void	ScalarConverter::convert(std::string inp)
 {
 	if (is_special_case(inp))
 		return ;
-	is_numeric(inp);
+	if (check_arg(inp))
+		is_numeric(inp);
+	else
+	{
+		std::cout	<< "char: Non displayable\n"
+					<< "int: Non displayable\n"
+					<< "float: Non displayable\n"
+					<< "double: Non displayable" << std::endl;
+	}
 }

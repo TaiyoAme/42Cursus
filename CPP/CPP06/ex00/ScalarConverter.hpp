@@ -22,6 +22,7 @@ public:
 	static bool is_special_case(std::string val);
 	static bool is_numeric(std::string val);
 	static bool is_displayable(float val);
+	static bool	check_arg(std::string val);
 
 private:
 	std::string values[4];

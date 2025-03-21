@@ -16,10 +16,13 @@
 
 int main(void)
 {
-	Base *p;
+	Base *p = new Base();
 
 	srand(time(0));
+	identify(p);
+	identify(*p);
 	p = generate();
 	identify(p);
 	identify(*p);
+	delete p;
 }

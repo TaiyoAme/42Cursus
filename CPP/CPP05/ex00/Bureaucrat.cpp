@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:54:19 by hehuang           #+#    #+#             */
-/*   Updated: 2024/12/25 18:14:17 by hehuang          ###   ########.fr       */
+/*   Updated: 2025/03/07 18:50:40 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,13 @@ Bureaucrat::Bureaucrat() : name_("No name"), grade_(150)
 	std::cout << "Bureaucrat DEFAULT constructor called" << std::endl;
 }
 
-Bureaucrat::Bureaucrat(std::string name, int grade) : name_(name), grade_(grade)
+Bureaucrat::Bureaucrat(std::string const name, int grade) : name_(name), grade_(grade)
 {
 	std::cout << "Bureaucrat(name, grade) constructor called" << std::endl;
-	try {
-		if (grade < 1)
-			throw Bureaucrat::GradeTooHighException();
-		else if (grade > 150)
-			throw Bureaucrat::GradeTooLowException();
-	}
-	catch (const Bureaucrat::GradeTooLowException& e)
-	{
-		std::cout << "Exception caught : " << e.what() << std::endl;	
-	}
-	catch (const Bureaucrat::GradeTooHighException& e)
-	{
-		std::cout << "Exception caught : " << e.what() << std::endl;
-	}
+	if (grade < 1)
+		throw Bureaucrat::GradeTooHighException();
+	else if (grade > 150)
+		throw Bureaucrat::GradeTooLowException();
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat &copy) : name_(copy.name_), grade_(copy.grade_)
@@ -49,7 +39,6 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &copy)
 	std::cout << "Bureaucrat COPY assignment called" << std::endl;
 	if (this != &copy)
 	{
-		this->name_ = copy.name_;
 		this->grade_ = copy.grade_;
 	}
 	return (*this);
@@ -72,24 +61,16 @@ int	Bureaucrat::getGrade()
 
 void	Bureaucrat::promote()
 {
-	try {
-		if (this->getGrade() - 1 < 1)
-			throw Bureaucrat::GradeTooHighException();
-		this->grade_--;
-	} catch (const Bureaucrat::GradeTooHighException& e) {
-		std::cout << "Exception caught : " << e.what() << std::endl;
-	}
+	if (this->getGrade() - 1 < 1)
+		throw Bureaucrat::GradeTooHighException();
+	this->grade_--;
 }
 
 void	Bureaucrat::demote()
 {
-	try {
-		if (this->getGrade() + 1 > 150)
-			throw Bureaucrat::GradeTooLowException();
-		this->grade_++;
-	} catch (const Bureaucrat::GradeTooLowException& e) {
-		std::cout << "Exception caught : " << e.what() << std::endl;
-	}
+	if (this->getGrade() + 1 > 150)
+		throw Bureaucrat::GradeTooLowException();
+	this->grade_++;
 }
 
 Bureaucrat::GradeTooLowException::GradeTooLowException(){};

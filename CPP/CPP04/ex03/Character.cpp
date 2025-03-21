@@ -94,7 +94,7 @@ void	Character::equip(AMateria *m)
 	{
 		if (this->inventory_[i] == m)
 		{
-			std::cout << "Already equipped !" << std::endl;
+			std::cerr << "Already equipped !" << std::endl;
 			return;
 		}
 	}
@@ -107,19 +107,19 @@ void	Character::equip(AMateria *m)
 			return;
 		}
 	}
-	std::cout << "Inventory full !" << std::endl;
+	std::cerr << "Inventory full !" << std::endl;
 }
 
 void	Character::use(int idx, ICharacter &npc)
 {
 	if (idx < 0 || idx >= 4)
 	{
-		std::cout << "wrong index !"<< std::endl;
+		std::cerr << "wrong index !"<< std::endl;
 		return ;
 	}
 	if (this->inventory_[idx] == 0)
 	{
-		std::cout << "Index of a empty space !" <<std::endl;
+		std::cerr << "Index of a empty space !" <<std::endl;
 		return ;
 	}
 	inventory_[idx]->use(npc);
@@ -131,12 +131,12 @@ void	Character::unequip(int idx)
 	static int full = 0;
 	if (idx < 0 || idx >= 4)
 	{
-		std::cout << "wrong index !"<< std::endl;
+		std::cerr << "wrong index !"<< std::endl;
 		return ;
 	}
 	if (this->inventory_[idx] == 0)
 	{
-		std::cout << "Index of a empty space !" <<std::endl;
+		std::cerr << "Index of a empty space !" <<std::endl;
 		return ;
 	}
 	if (floor_item >= 10)
@@ -145,7 +145,7 @@ void	Character::unequip(int idx)
 		delete this->floor_[floor_item];
 		if (full == 0)
 		{
-			std::cout << "Floor full starting to delete first Materia dropped" << std::endl;
+			std::cerr << "Floor full starting to delete first Materia dropped" << std::endl;
 			full++;
 		}
 	}

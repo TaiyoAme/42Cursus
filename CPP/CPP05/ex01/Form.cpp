@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 18:18:46 by hehuang           #+#    #+#             */
-/*   Updated: 2024/12/25 19:39:12 by hehuang          ###   ########.fr       */
+/*   Updated: 2025/03/07 19:20:54 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,12 @@ const int Form::getExecGrad() const
 
 void Form::beSigned(Bureaucrat &b)
 {
-	try {
-		if (b.getGrade() > this->getSignGrad())
-			throw Form::GradeTooLowException();
-		this->signed_ = true;
-	} catch (Form::GradeTooLowException& e) {
-		std::cout << "Exception caught : " << e.what() <<std::endl;
+	if (b.getGrade() > this->getSignGrad())
+	{
+		std::cout << "in form" << std::endl;
+		throw Form::GradeTooLowException();
 	}
+	this->signed_ = true;
 }
 
 Form::GradeTooLowException::GradeTooLowException(){};

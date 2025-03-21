@@ -56,8 +56,6 @@ int main(void)
 		Bureaucrat *a = new Bureaucrat("Assistant", 145);
 		Bureaucrat *b = new Bureaucrat("CEO", 1);
 		AForm *c = new PresidentialPardonForm("some dude");
-		// Form *d = new Form(*c);
-		// Form *d = new Form("Rent Contract", 140, 100); // you are not able to construct an abstract class here
 		std::cout << std::endl;
 
 		std::cout << "\033[34mTesting\033[0m" << std::endl;
@@ -80,7 +78,7 @@ int main(void)
 		try
 		{
 			c->beSigned(*a);
-			// a->signForm(*c);
+			a->signForm(*c);
 			std::cout << "OK" << std::endl;
 		}
 		catch(Bureaucrat::GradeTooLowException &e)

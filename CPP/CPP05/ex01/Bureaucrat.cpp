@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:54:19 by hehuang           #+#    #+#             */
-/*   Updated: 2024/12/25 19:33:45 by hehuang          ###   ########.fr       */
+/*   Updated: 2025/03/07 19:23:28 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,36 +62,27 @@ int	Bureaucrat::getGrade()
 
 void	Bureaucrat::promote()
 {
-	try {
-		if (this->getGrade() - 1 < 1)
-			throw Bureaucrat::GradeTooHighException();
-		this->grade_--;
-	} catch (const Bureaucrat::GradeTooHighException& e) {
-		std::cout << "Promote Exception caught : " << e.what() << std::endl;
-	}
+	if (this->getGrade() - 1 < 1)
+		throw Bureaucrat::GradeTooHighException();
+	this->grade_--;
 }
 
 void	Bureaucrat::demote()
 {
-	try {
-		if (this->getGrade() + 1 > 150)
-			throw Bureaucrat::GradeTooLowException();
-		this->grade_++;
-	} catch (const Bureaucrat::GradeTooLowException& e) {
-		std::cout << "Demote Exception caught : " << e.what() << std::endl;
-	}
+	if (this->getGrade() + 1 > 150)
+		throw Bureaucrat::GradeTooLowException();
+	this->grade_++;
 }
 
 void Bureaucrat::signForm(Form &f)
 {
-	try {
-		if (this->getGrade() > f.getSignGrad())
-			throw Bureaucrat::GradeTooLowException();
-		f.beSigned(*this);
-		std::cout << *this << "\nsigned\n" << f << std::endl;
-	} catch (Bureaucrat::GradeTooLowException& e) {
-		std::cout << *this << "\ncouldn't sign\n" << f << "\nbecause\n" << e.what() << std::endl;  
+	if (this->getGrade() > f.getSignGrad())
+	{
+		std::cout << "burr grade: " << this->getGrade() << " | form: " << f.getSignGrad() << std::endl;
+		throw Bureaucrat::GradeTooLowException();
 	}
+	f.beSigned(*this);
+	std::cout << *this << " SIGNED " << f << std::endl;
 }
 
 Bureaucrat::GradeTooLowException::GradeTooLowException(){};
