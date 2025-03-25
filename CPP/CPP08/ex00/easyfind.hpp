@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 18:46:39 by hehuang           #+#    #+#             */
-/*   Updated: 2025/01/26 19:26:25 by hehuang          ###   ########.fr       */
+/*   Updated: 2025/03/24 17:36:34 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ public:
 template <typename T>
 typename T::iterator easyfind(T& container, int N) 
 {
-	auto res = std::find(container.begin(), container.end(), N);
+	typename T::iterator res = std::find(container.begin(), container.end(), N);
 	if (res == container.end())
 		throw ValueNotFoundException();
 	return (res);

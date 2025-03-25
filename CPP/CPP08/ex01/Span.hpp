@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 19:52:46 by hehuang           #+#    #+#             */
-/*   Updated: 2025/01/27 18:25:52 by hehuang          ###   ########.fr       */
+/*   Updated: 2025/03/24 18:59:12 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,14 @@ public:
 	unsigned int shortestSpan();
 	unsigned int longestSpan();
 
-	void	addRange(unsigned int n);
+	template<typename Iterator>
+	void	addRange(Iterator begin, Iterator end)
+	{
+		if (distance(begin, end) + this->size() > this->size_) {
+            throw (std::out_of_range("no enough space left"));
+        }
+        this->insert(this->end(), begin, end);
+	}
 
 	class LimitReachedException : public std::exception {
 	public:

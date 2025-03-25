@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 19:52:35 by hehuang           #+#    #+#             */
-/*   Updated: 2025/01/27 18:34:55 by hehuang          ###   ########.fr       */
+/*   Updated: 2025/03/24 18:27:35 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,4 @@ unsigned int Span::longestSpan()
 		minSpan = std::max(minSpan, static_cast<unsigned int>(sortedList[i + 1] - sortedList[i]));
 	}
 	return (minSpan);
-}
-
-void	Span::addRange(unsigned int n)
-{
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<int> dis(std::numeric_limits<int>::min(),std::numeric_limits<int>::max());
-	
-	for (unsigned int i = 0 ; i < n; i++)
-	{
-		this->addNumber(dis(gen));
-	}
 }

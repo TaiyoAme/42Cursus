@@ -6,13 +6,13 @@
 #    By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/24 17:45:38 by hehuang           #+#    #+#              #
-#    Updated: 2025/01/27 19:04:11 by hehuang          ###   ########.fr        #
+#    Updated: 2025/02/08 18:23:51 by hehuang          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = executor
 
-SRCS = main.cpp MutantStack.hpp 
+SRCS = main.cpp
 
 OBJS = ${SRCS:.cpp=.o}
 
