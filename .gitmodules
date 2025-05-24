@@ -1,0 +1,7 @@
+[submodule "ft_irc"]
+	path = ft_irc
+	url = git@github.com:brachidios720/ft_irc.git
+  branch = parsing
+[submodule "minishell"]
+	path = minishell
+	url = git@github.com:Brobit/minishell.git
